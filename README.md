@@ -1,5 +1,7 @@
 # 法規 AI 查詢系統（AI RAG）— 公開展示版
 
+[English](README.en.md) · **繁體中文**
+
 以 FastAPI 為後端、原生 HTML/CSS/JS 為前端的法規檢索與問答系統（RAG），專為交通法規問答設計。支援共用密碼登入、角色切換、多對話管理、首頁預設問答按鈕、追問機制、意見回饋與文件管理，可部署於 Google Cloud Run。
 
 > ## ⚠️ 這是公開展示版（Public showcase build）
