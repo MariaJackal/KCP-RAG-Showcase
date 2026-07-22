@@ -1,0 +1,57 @@
+.git
+.gitignore
+.env
+*.env
+.env.example
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.claude/
+tests/
+fixlog/
+eval/
+styles/.gitkeep
+*.md
+!requirements.txt
+!requirements-dev.txt
+workflow.md
+PROJECT_STATUS_V1.6.md
+implement_plan.md
+
+# local dev artifacts
+sessions.db
+sessions.db-*
+*.db
+*.db-shm
+*.db-wal
+
+# screenshots / local notes
+online-home.png
+work/
+document/
+docs/
+*.pdf
+
+# local-only helper scripts (not needed in runtime image)
+scripts/logout-only.ps1
+scripts/restart-local.ps1
+scripts/deploy-manual.ps1
+scripts/make_release_pptx.py
+scripts/make_solution_matrix_slide.py
+
+# PowerPoint slide decks + Office lock temp files
+*.pptx
+~$*
+
+# unexpected files
+ERROR'
+
+# HTML deck portable folder + QA assets (deck ships via static/slides.html)
+slides_deck/
+assets/
+codex_review/
+
+# AI-tool scratch (2026-07-19)
+.superpowers/

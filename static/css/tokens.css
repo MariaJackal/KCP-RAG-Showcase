@@ -1,0 +1,58 @@
+:root {
+  /* GCP Blue */
+  --gcp-blue-600: #1a73e8;
+  --gcp-blue-700: #174ea6;
+  --gcp-blue-100: #e8f0fe;
+
+  /* GCP Grays */
+  --gcp-gray-900: #202124;
+  --gcp-gray-800: #3c4043;
+  --gcp-gray-700: #5f6368;
+  --gcp-gray-500: #80868b;
+  --gcp-gray-200: #dadce0;
+  --gcp-gray-100: #f1f3f4;
+
+  /* Surfaces */
+  --gcp-surface: #ffffff;
+  --gcp-background: #ffffff;
+  --gcp-white: #ffffff;
+
+  /* Status */
+  --gcp-red-600: #d93025;
+  --gcp-green-600: #188038;
+
+  /* Radius */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px rgba(60, 64, 67, 0.15);
+  --shadow-md: 0 1px 3px rgba(60, 64, 67, 0.3), 0 4px 8px rgba(60, 64, 67, 0.15);
+
+  /* Sidebar */
+  --sidebar-width: 260px;
+  --sidebar-bg: var(--gcp-gray-100);
+
+  /* Font */
+  --font-family: "Google Sans", "Noto Sans TC", "Segoe UI", system-ui, sans-serif;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+}

@@ -1,0 +1,350 @@
+/* Login View */
+#login-view {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  /* 登入背景（公開版：純色，原專案的品牌背景圖已移除） */
+  background-color: #f4f5f7;
+}
+
+/* Liquid Glass 登入卡 —— 桌機與手機共用（淺色背景版：玻璃本體幾乎全透明） */
+.login-card {
+  position: relative;
+  z-index: 1;
+  /* 清玻璃：白底白浮雕對比極低，模糊稍大就會被抹成均勻白（看起來像實心卡）。
+     blur 必須壓在 2-3px，浮雕線條才能穿透卡片延續，玻璃才「看得見背景」。 */
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
+  /* 折射緣光：左上最亮、右下次亮的方向性 rim light + 柔和大投影 */
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    inset 1.5px 1.5px 1px rgba(255, 255, 255, 0.7),
+    inset -1.5px -1.5px 1px rgba(255, 255, 255, 0.35),
+    0 0 0 1px rgba(60, 64, 67, 0.05),
+    0 16px 40px rgba(60, 64, 67, 0.18);
+  padding: var(--space-6);
+  /* 精緻圓角：約短邊的 ~11%，比 iPhone icon 比例收斂，較具專業質感 */
+  border-radius: 28px;
+  /* 黃金比例矩形（寬:高 = 1.618:1）；內容置中，藥丸寬度由 .login-inner 依標題決定 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 360px;
+  max-width: 90vw;
+  aspect-ratio: 1.618 / 1;
+  text-align: center;
+}
+
+/* 內容群組縮到標題寬度，使輸入框／按鈕（width:100%）與標題等寬，並在大卡片中置中 */
+.login-inner {
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* 玻璃上的高光帶：頂端一道柔光，加強鏡面反射質感 */
+.login-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(160deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0) 35%);
+  pointer-events: none;
+}
+
+/* 表單浮到玻璃高光層（::after）之上 */
+.login-form {
+  position: relative;
+  z-index: 1;
+}
+
+/* 手機：橫向背景圖在直屏會破圖，退回純色底；玻璃卡片沿用上方共用規則 */
+@media (max-width: 640px) {
+  #login-view {
+    padding: var(--space-5);
+    background-image: none;
+  }
+  .login-card {
+    max-width: 340px;
+  }
+}
+
+/* 不支援 backdrop-filter 的瀏覽器退回實心白卡，避免文字看不清 */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .login-card {
+    background: rgba(255, 255, 255, 0.95);
+  }
+}
+
+.login-title {
+  font-size: var(--font-size-xl);
+  font-weight: 500;
+  margin-bottom: var(--space-1);
+  /* 標題不換行，作為卡片寬度的基準 */
+  white-space: nowrap;
+}
+
+.login-subtitle {
+  color: var(--gcp-gray-700);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-5);
+}
+
+.google-signin-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-3);
+  min-height: 44px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.login-input {
+  width: 100%;
+  /* size="1" 讓欄位不撐寬卡片，寬度交給標題決定 */
+  min-width: 0;
+  padding: 10px 16px;
+  border: 1px solid rgba(95, 99, 104, 0.18);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-base);
+  color: var(--gcp-gray-900);
+  /* placeholder 與輸入內容置中對齊 */
+  text-align: center;
+  /* 半透明灰色內凹欄位，配合玻璃卡片（深字在淺底上仍清晰） */
+  background: rgba(218, 222, 224, 0.5);
+  box-shadow: inset 0 1px 2px rgba(60, 64, 67, 0.08);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.login-input:focus {
+  border-color: var(--gcp-gray-500);
+  background: rgba(218, 222, 224, 0.65);
+}
+
+/* Main View */
+#main-view {
+  flex-direction: row;
+}
+
+/* Sidebar */
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--gcp-gray-200);
+  overflow: hidden;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  min-height: 48px;
+  border-bottom: 1px solid var(--gcp-gray-200);
+}
+
+#persona-select,
+#preset-select {
+  text-align: center;
+}
+
+.sidebar-title {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  margin-right: auto;
+}
+
+.persona-selector {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--gcp-gray-200);
+}
+
+.preset-selector {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--gcp-gray-200);
+}
+
+.conversation-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-2) 0;
+}
+
+.sidebar-footer {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--gcp-gray-200);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Chat Area */
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--gcp-gray-200);
+  min-height: 48px;
+}
+
+.chat-title {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.welcome-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  color: var(--gcp-gray-500);
+  font-size: var(--font-size-lg);
+}
+
+.chat-input-wrapper {
+  padding: var(--space-3) var(--space-5);
+  display: flex;
+  align-items: center;
+}
+
+.chat-form {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  width: 100%;
+  /* 與訊息閱讀欄（.message max-width: 860px）同寬置中，輸入框不再全寬 */
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.chat-input {
+  flex: 1;
+  resize: none;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Welcome state: collapse messages area so input can center */
+.chat-area--welcome #messages {
+  flex: 0 0 auto;
+}
+
+.chat-area--welcome .chat-input-wrapper {
+  flex: 0 0 auto;
+  margin-top: auto;
+}
+
+.chat-area--welcome .chat-form {
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.chat-area--welcome .chat-input {
+  min-height: 100px;
+}
+
+.chat-area--welcome #suggestions {
+  flex: 0 0 auto;
+  margin-bottom: auto;
+  padding-top: var(--space-2);
+}
+
+/* Sidebar overlay (mobile) */
+.sidebar-overlay {
+  display: none;
+}
+
+/* Desktop: hide hamburger button */
+@media (min-width: 768px) {
+  .sidebar-toggle {
+    display: none;
+  }
+}
+
+/* Mobile: responsive sidebar */
+@media (max-width: 767px) {
+  .sidebar-toggle {
+    display: inline-flex;
+    font-size: var(--font-size-xl);
+    margin-right: var(--space-2);
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    width: 280px;
+    min-width: 0;
+    transform: translateX(-100%);
+    transition: transform var(--transition-normal);
+  }
+
+  /* sidebar 脫離 flex flow 後，chat-area 需要撐滿 */
+  #main-view {
+    position: relative;
+  }
+
+  /* 讓 sidebar 在 flex 裡不佔空間（已 fixed 脫離文件流） */
+  .sidebar {
+    flex: none;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 99;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+
+  .chat-area {
+    width: 100%;
+    flex: 1;
+  }
+}

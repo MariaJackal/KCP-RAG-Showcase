@@ -1,0 +1,30 @@
+{
+  "version": "sample-only",
+  "description": "【公開版範例資料】台灣交通法規口語 → 正式用語對照表的 schema 示意。正式專案使用的完整字典（含逐條查證的條號）未包含在本公開 repo 中。此處僅保留 2 條中性範例，用於說明 services/synonym_service.py 的資料格式。",
+  "rules": [
+    {
+      "category": "範例-機車人行道",
+      "verified_at": "SAMPLE",
+      "verified_against": "SAMPLE — 正式版需以官方法規資料庫逐條查證",
+      "user_terms": ["機車", "摩托車"],
+      "context_terms": ["人行道", "騎樓"],
+      "legal_terms": ["（範例）對應之法規正式用語與條號"],
+      "note": "範例規則，非正式字典內容。",
+      "prepend": true,
+      "append_to_query": false,
+      "replace": false
+    },
+    {
+      "category": "範例-變換車道方向燈",
+      "verified_at": "SAMPLE",
+      "verified_against": "SAMPLE — 正式版需以官方法規資料庫逐條查證",
+      "user_terms": ["未打方向燈", "沒打方向燈"],
+      "context_terms": ["變換車道", "轉彎"],
+      "legal_terms": ["（範例）對應之法規正式用語與條號"],
+      "note": "範例規則，非正式字典內容。",
+      "prepend": true,
+      "append_to_query": false,
+      "replace": false
+    }
+  ]
+}

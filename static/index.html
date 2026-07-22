@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+  <title>警政 AI 助理</title>
+  <link rel="stylesheet" href="/static/css/tokens.css">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/layout.css">
+  <link rel="stylesheet" href="/static/css/components.css">
+  <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+
+  <!-- Login View -->
+  <div id="login-view" class="view">
+    <div class="login-card">
+      <div class="login-inner">
+        <h1 class="login-title">警政 AI 助理</h1>
+        <p class="login-subtitle">AI RAG</p>
+        <form id="login-form" class="login-form">
+          <input type="password" id="password-input" class="login-input" placeholder="請輸入密碼" autocomplete="current-password" size="1">
+          <button type="submit" id="login-btn" class="btn btn-primary btn-block">登入</button>
+        </form>
+        <div id="login-error" class="error-text" hidden></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main View (Sidebar + Chat) -->
+  <div id="main-view" class="view" hidden>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <h2 class="sidebar-title">對話紀錄</h2>
+        <button id="feedback-btn" class="btn btn-icon" title="意見回饋">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+        </button>
+        <button id="new-chat-btn" class="btn btn-icon" title="新增對話">+</button>
+      </div>
+      <div id="persona-selector" class="persona-selector">
+        <select id="persona-select" class="select">
+          <!-- populated by persona.js -->
+        </select>
+      </div>
+      <div id="preset-selector" class="preset-selector">
+        <select id="preset-select" class="select">
+          <option value="">常見問題</option>
+          <!-- populated by chat.js initPresetSelector() -->
+        </select>
+      </div>
+      <ul id="conversation-list" class="conversation-list">
+        <!-- populated by sidebar.js -->
+      </ul>
+      <div class="sidebar-footer">
+        <button id="law-list-btn" class="btn btn-text btn-block">法規清單</button>
+        <button id="admin-link-btn" class="btn btn-text btn-block" hidden>資料管理</button>
+        <button id="logout-btn" class="btn btn-text btn-block">登出</button>
+      </div>
+    </aside>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- Chat Area -->
+    <main class="chat-area">
+      <div id="chat-header" class="chat-header">
+        <button id="sidebar-toggle" class="btn btn-icon sidebar-toggle" title="選單">&#9776;</button>
+        <span id="chat-title" class="chat-title">新對話</span>
+      </div>
+      <div id="messages" class="messages"></div>
+      <div class="chat-input-wrapper">
+        <form id="chat-form" class="chat-form">
+          <textarea id="chat-input" class="chat-input" placeholder="請輸入您的法規問題" rows="1"></textarea>
+          <button type="submit" id="send-btn" class="btn btn-primary btn-send" disabled>傳送</button>
+        </form>
+      </div>
+      <div id="suggestions" class="suggestions" hidden>
+        <p class="suggestions-title">常見問題</p>
+        <div id="suggestions-grid" class="preset-grid"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Admin View -->
+  <div id="admin-view" class="view" hidden>
+    <div class="admin-panel">
+      <div class="admin-header">
+        <div class="admin-header-text">
+          <h2>資料管理</h2>
+          <p class="admin-subtitle">匯出系統累積的提問、意見回饋與對話記錄（CSV，UTF-8）</p>
+        </div>
+        <div class="admin-header-actions">
+          <button id="admin-back-btn" class="btn btn-text">返回對話</button>
+        </div>
+      </div>
+      <div id="upload-status" class="upload-status" hidden></div>
+
+      <div class="admin-tabs" role="tablist">
+        <button id="admin-tab-export" class="admin-tab active" role="tab" aria-selected="true">資料匯出</button>
+        <button id="admin-tab-review" class="admin-tab" role="tab" aria-selected="false">回饋審核</button>
+      </div>
+
+      <div id="admin-export-section">
+      <div class="export-grid">
+        <div class="export-card">
+          <div class="export-card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <h3 class="export-card-title">提問記錄</h3>
+          <p class="export-card-desc">使用者向系統提出的所有問題，含提問時間與內容</p>
+          <button id="export-questions-btn" class="btn btn-secondary">匯出 CSV</button>
+        </div>
+        <div class="export-card">
+          <div class="export-card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <h3 class="export-card-title">意見回饋</h3>
+          <p class="export-card-desc">使用者回報的問題類型與內容，並附當時的對話問答</p>
+          <button id="export-feedback-btn" class="btn btn-secondary">匯出 CSV</button>
+        </div>
+        <div class="export-card">
+          <div class="export-card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="8" y1="6" x2="21" y2="6"/>
+              <line x1="8" y1="12" x2="21" y2="12"/>
+              <line x1="8" y1="18" x2="21" y2="18"/>
+              <line x1="3" y1="6" x2="3.01" y2="6"/>
+              <line x1="3" y1="12" x2="3.01" y2="12"/>
+              <line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
+          </div>
+          <h3 class="export-card-title">對話記錄</h3>
+          <p class="export-card-desc">所有使用者的完整對話歷史（問題與系統回答）</p>
+          <button id="export-conversations-btn" class="btn btn-secondary">匯出 CSV</button>
+        </div>
+      </div>
+
+      <div class="export-history">
+        <div class="export-history-header">
+          <h3 class="export-history-title">匯出記錄</h3>
+          <span class="export-history-hint">僅記錄此瀏覽器的匯出操作</span>
+        </div>
+        <div class="export-table-wrap">
+          <table class="export-table">
+            <thead>
+              <tr>
+                <th>匯出時間</th>
+                <th>資料類型</th>
+                <th>檔案名稱</th>
+                <th>資料筆數</th>
+                <th>檔案大小</th>
+                <th>狀態</th>
+              </tr>
+            </thead>
+            <tbody id="export-history-body"></tbody>
+          </table>
+        </div>
+        <div id="export-history-empty" class="export-history-empty">尚無匯出記錄</div>
+      </div>
+      </div><!-- /admin-export-section -->
+
+      <div id="admin-review-section" hidden>
+        <div class="review-toolbar">
+          <label class="review-filter-label">類型
+            <select id="review-type-filter" class="review-select">
+              <option value="">全部</option>
+              <option value="倒讚" selected>倒讚</option>
+              <option value="讚">讚</option>
+              <option value="答案錯誤">答案錯誤</option>
+              <option value="系統功能異常">系統功能異常</option>
+            </select>
+          </label>
+          <label class="review-filter-label review-checkbox-label">
+            <input type="checkbox" id="review-unreviewed-only" checked> 只看未標註
+          </label>
+          <button id="review-refresh-btn" class="btn btn-secondary">重新整理</button>
+        </div>
+        <div id="review-status" class="upload-status" hidden></div>
+        <div id="review-list" class="review-list"></div>
+        <div id="review-empty" class="export-history-empty" hidden>沒有符合條件的回饋記錄</div>
+        <div class="review-pagination">
+          <button id="review-prev-btn" class="btn btn-secondary" disabled>上一頁</button>
+          <span id="review-page-info" class="review-page-info"></span>
+          <button id="review-next-btn" class="btn btn-secondary" disabled>下一頁</button>
+        </div>
+      </div><!-- /admin-review-section -->
+    </div>
+  </div>
+
+  <!-- Law List Modal -->
+  <div id="law-list-modal" class="law-list-modal" hidden>
+    <div class="law-list-dialog" role="dialog" aria-modal="true">
+      <h3 class="law-list-title">法規清單</h3>
+      <div class="law-list-divider"></div>
+      <div class="law-list-content">
+        <div class="law-category">
+          <span class="law-category-label">法律</span>
+          <ul class="law-items">
+            <li>道路交通管理處罰條例</li>
+            <li>道路交通安全規則</li>
+          </ul>
+        </div>
+        <div class="law-list-divider-thin"></div>
+        <div class="law-category">
+          <span class="law-category-label">法規命令</span>
+          <ul class="law-items">
+            <li>違反道路交通管理事件統一裁罰基準及處理細則</li>
+            <li>道路交通事故處理辦法</li>
+          </ul>
+        </div>
+        <div class="law-list-divider-thin"></div>
+        <div class="law-category">
+          <span class="law-category-label">行政規則</span>
+          <ul class="law-items">
+            <li>道路交通事故處理規範</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Feedback Modal -->
+  <div id="feedback-modal" class="feedback-modal" hidden>
+    <div class="feedback-dialog" role="dialog" aria-modal="true" aria-label="意見回饋">
+      <h3 class="feedback-title">意見回饋</h3>
+      <div class="feedback-divider"></div>
+      <select id="feedback-type" class="feedback-select">
+        <option value="">請選擇問題類型</option>
+        <option value="答案錯誤">答案錯誤</option>
+        <option value="系統功能異常">系統功能異常</option>
+      </select>
+      <textarea id="feedback-content" class="feedback-textarea"
+        placeholder="請輸入您想反應的系統問題；或答案錯誤的「問題」與「正確的答案」(簡述)"
+        rows="5"></textarea>
+      <div id="feedback-msg" class="feedback-msg" hidden></div>
+      <div class="feedback-actions">
+        <button id="feedback-cancel-btn" class="btn btn-text">取消</button>
+        <button id="feedback-submit-btn" class="btn btn-primary">送出</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/static/js/app.js?v=14"></script>
+</body>
+</html>

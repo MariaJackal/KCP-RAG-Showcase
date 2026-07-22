@@ -1,0 +1,47 @@
+.git/
+.gitignore
+.gcloudignore
+.dockerignore
+.env
+.env.example
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.claude/
+.vscode/
+
+# Local runtime artifacts
+sessions.db
+sessions.db-*
+*.db
+*.db-shm
+*.db-wal
+
+# Local documents and generated exports
+document/
+work/
+docs/
+ToDo/
+Plan/
+*.pdf
+
+# 互動式 HTML 投影片與其產物（簡報實際上線走 static/slides.html，這些不需部署）
+slides_deck/
+assets/
+
+# Tests and notes are not needed in the runtime source upload.
+tests/
+tests_api/
+eval/
+ReleaseNotes/
+*.md
+
+# Local-only helper scripts
+scripts/logout-only.ps1
+scripts/restart-local.ps1
+scripts/deploy-manual.ps1
+
+# Unexpected files
+ERROR'

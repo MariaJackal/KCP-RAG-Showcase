@@ -1,0 +1,50 @@
+# Python 暫存檔
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Google Cloud & 環境變數安全
+*.json
+.env
+*.env
+.env.*
+.flaskenv
+
+# 編輯器與系統暫存
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# SQLite session store
+sessions.db
+sessions.db-shm
+sessions.db-wal
+
+# Test session artifacts
+tests_api_*.db
+tests_api_*.db-journal
+
+# Local documents and generated exports
+*.pdf
+document/
+
+# Eval: track cases but not generated reports
+!eval/eval_cases.json
+eval/eval_report.json
+# Golden eval: 允許追蹤基線報告（預設不自動加入，需明確 git add）
+!eval/results/*.json
+
+# Synonym / legal term dictionary (source code, not credentials)
+!data/legal_synonyms.json
+
+# PowerPoint slide decks + Office lock temp files (generated artifacts)
+*.pptx
+~$*
+
+# Local-only slide-generation scripts (not part of the app)
+scripts/make_release_pptx.py
+scripts/make_solution_matrix_slide.py

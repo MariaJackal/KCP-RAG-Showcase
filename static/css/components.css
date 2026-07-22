@@ -1,0 +1,395 @@
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  padding: var(--space-2) var(--space-4);
+  transition: background var(--transition-fast), box-shadow var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--gcp-blue-600);
+  color: var(--gcp-white);
+}
+.btn-primary:hover { background: var(--gcp-blue-700); }
+.btn-primary:disabled {
+  background: var(--gcp-gray-200);
+  color: var(--gcp-gray-500);
+  cursor: not-allowed;
+}
+
+.btn-text {
+  background: transparent;
+  color: var(--gcp-gray-700);
+}
+.btn-text:hover { background: rgba(0, 0, 0, 0.04); }
+
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--gcp-gray-800);
+  font-size: 20px;
+  font-weight: 400;
+}
+.btn-icon:hover { background: var(--gcp-gray-200); }
+
+.btn-block { width: 100%; }
+
+.btn-send {
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+  min-width: 64px;
+}
+
+/* 串流期間的「停止生成」狀態 */
+.btn-send.btn-stop {
+  background: var(--gcp-red-600);
+  color: var(--gcp-white);
+}
+.btn-send.btn-stop:hover { background: #b3271b; }
+
+/* 首頁常見問題按鈕 */
+.preset-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  max-width: 720px;
+  margin-top: var(--space-5);
+}
+
+.preset-btn {
+  border: 1px solid #7B7B7B;
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: var(--space-3) var(--space-4);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  color: var(--gcp-gray-800);
+  cursor: pointer;
+  max-width: 11em;
+  min-height: 2.8em;
+  line-height: 1.4;
+  white-space: normal;
+  text-align: center;
+  transition: background var(--transition-fast);
+}
+
+.preset-btn:hover {
+  background: var(--gcp-gray-100);
+}
+
+/* Inputs */
+.input, .select, .chat-input {
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  border: 1px solid var(--gcp-gray-200);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  width: 100%;
+  background: var(--gcp-surface);
+  color: var(--gcp-gray-900);
+}
+
+.chat-input {
+  min-height: 80px;
+  font-size: var(--font-size-lg);
+  padding: var(--space-3) var(--space-4);
+}
+
+.chat-input::placeholder {
+  font-size: var(--font-size-lg);
+  color: var(--gcp-gray-500);
+}
+
+.suggestions {
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--space-5) var(--space-4);
+}
+
+.suggestions-title {
+  font-size: var(--font-size-sm);
+  color: var(--gcp-gray-500);
+  margin: 0 0 var(--space-2);
+  text-align: center;
+}
+.input:focus, .select:focus, .chat-input:focus {
+  border-color: var(--gcp-blue-600);
+  box-shadow: 0 0 0 2px var(--gcp-blue-100);
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235f6368' d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+#login-form .input {
+  margin-bottom: var(--space-3);
+}
+
+#login-form .btn {
+  margin-top: var(--space-2);
+}
+
+/* 登入按鈕改灰色系（僅限登入頁，不影響聊天頁的主要按鈕） */
+#login-form .btn-primary {
+  background: var(--gcp-gray-700);
+}
+#login-form .btn-primary:hover {
+  background: var(--gcp-gray-800);
+}
+
+/* Error text */
+.error-text {
+  color: var(--gcp-red-600);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-2);
+}
+
+/* Conversation list items */
+.conv-item {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  gap: var(--space-2);
+}
+.conv-item:hover { background: var(--gcp-gray-200); }
+.conv-item.active { background: var(--gcp-blue-100); color: var(--gcp-blue-700); }
+
+.conv-item-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--font-size-sm);
+}
+
+.conv-item-delete {
+  opacity: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--gcp-gray-500);
+  font-size: 16px;
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+  transition: opacity var(--transition-fast);
+}
+.conv-item:hover .conv-item-delete { opacity: 1; }
+.conv-item-delete:hover { color: var(--gcp-red-600); }
+
+/* Message bubbles
+   對話流限制在置中的閱讀欄（比照 Claude Web）：寬螢幕下問題與答案
+   不再被拉到視窗兩端；user 氣泡靠欄右緣、assistant 靠欄左緣。 */
+.message {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.message.user {
+  align-items: flex-end;
+}
+
+.message.user .message-bubble {
+  max-width: 720px;
+}
+
+.message.assistant {
+  align-items: flex-start;
+}
+
+.message-role {
+  font-size: var(--font-size-sm);
+  color: var(--gcp-gray-500);
+  margin-bottom: var(--space-1);
+}
+
+.message-bubble {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.message.user .message-bubble {
+  background: var(--gcp-blue-600);
+  color: var(--gcp-white);
+  border-bottom-right-radius: var(--radius-xs);
+}
+
+.message.assistant .message-bubble {
+  background: var(--gcp-gray-100);
+  color: var(--gcp-gray-900);
+  border-bottom-left-radius: var(--radius-xs);
+}
+
+.message-disclaimer {
+  font-size: 0.75em;
+  color: var(--gcp-gray-500);
+  margin-top: var(--space-1);
+  padding: 0 var(--space-2);
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+/* --- Message rating（每則系統回答的 👍👎）--- */
+.message-rating {
+  display: flex;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+  padding: 0 var(--space-2);
+}
+
+.rating-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--gcp-gray-500);
+  cursor: pointer;
+}
+
+.rating-btn:hover {
+  background: var(--gcp-gray-100);
+  color: var(--gcp-gray-900);
+}
+
+.rating-btn.selected {
+  color: var(--gcp-blue-600);
+  background: var(--gcp-blue-50, #e8f0fe);
+}
+
+.rating-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* --- Law cross-reference marker [n]（純文字指引，不可點）--- */
+.law-xref {
+  color: var(--gcp-blue-700);
+  font-weight: 600;
+  font-size: 0.85em;
+}
+
+/* --- Answer content typography (Gemini-like) --- */
+.msg-content p {
+  margin: 0 0 0.4em;
+}
+
+.msg-content ul {
+  list-style: disc;
+  margin: 0.2em 0 0.4em;
+  padding-left: 1.4em;
+}
+
+.msg-content ul li {
+  margin-bottom: 0.15em;
+}
+
+.msg-content strong {
+  font-weight: 600;
+}
+
+/* Section headers (結論 / 法規依據 / 注意事項) */
+.section-header {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 0.4em;
+  font-size: 1.3em;
+}
+
+.section-header strong {
+  font-weight: 700;
+}
+
+/* Gemini sparkle icon */
+.gemini-icon {
+  display: inline-block;
+  font-size: 1.05em;
+  margin-right: 0.4em;
+  background: linear-gradient(135deg, #4285F4, #9B72CB, #D96570);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  vertical-align: baseline;
+}
+
+/* Progress indicator */
+.progress-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--gcp-gray-500);
+  font-size: var(--font-size-sm);
+  padding: var(--space-2) var(--space-4);
+  /* 對齊訊息閱讀欄（.message max-width: 860px），不貼視窗左緣 */
+  width: 100%;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.progress-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--gcp-blue-600);
+  border-radius: 50%;
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Law article collapsible */
+.law-article {
+  margin: var(--space-2) 0;
+}
+.law-article > summary {
+  cursor: pointer;
+  list-style: revert;
+  padding: var(--space-1) 0;
+  color: var(--gcp-gray-900);
+  font-size: 1.1em;
+}
+.law-article-body {
+  padding: var(--space-2) 0 var(--space-2) var(--space-3);
+  color: var(--gcp-gray-700);
+  border-left: 2px solid var(--gcp-gray-200);
+  margin-top: var(--space-1);
+}
+
+/* Admin */
+.admin-panel {
+  padding: var(--space-5);
+}

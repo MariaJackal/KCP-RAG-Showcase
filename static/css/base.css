@@ -1,0 +1,63 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+[hidden] { display: none !important; }
+
+html, body {
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--gcp-gray-900);
+  background: var(--gcp-background);
+  -webkit-font-smoothing: antialiased;
+}
+
+.view {
+  display: none;
+  height: 100%;
+  height: 100dvh;
+}
+.view:not([hidden]) {
+  display: flex;
+}
+
+a { color: var(--gcp-blue-600); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+ul { list-style: none; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gcp-gray-200); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--gcp-gray-500); }
+
+/* Markdown in messages */
+.msg-content h1, .msg-content h2, .msg-content h3 {
+  margin-top: 0.8em;
+  margin-bottom: 0.4em;
+}
+.msg-content p { margin-bottom: 0.5em; }
+.msg-content ul, .msg-content ol { margin-left: 1.5em; margin-bottom: 0.5em; }
+.msg-content code {
+  background: var(--gcp-gray-100);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+}
+.msg-content pre {
+  background: var(--gcp-gray-100);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin-bottom: 0.5em;
+}
+.msg-content pre code {
+  background: none;
+  padding: 0;
+}
